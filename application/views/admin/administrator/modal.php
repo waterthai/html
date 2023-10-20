@@ -99,14 +99,6 @@
     </div>
 </div>
 
-<script>
-    function clear_permission_error() {
-        $('#txt_error').hide();
-        $('#txt_error_change').hide();
-        $('#txt_error_change_new').hide();
-        $('#txt_error_online').hide();
-    }
-</script>
 
 
 <div class="modal" id="modal_change_username" data-bs-backdrop="static">
@@ -239,3 +231,47 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal" id="modal_check_updatecode" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" style="color:black">Permission</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <input type="hidden" id="path_slug">
+                <div class="form-group">
+                    <label style="color: black;">Username</label>
+                    <input type="text" class="form-control" id="user_permission_update" onclick="clear_permission_error()">
+                </div>
+                <div class="form-group">
+                    <label style="color: black;">Password</label>
+                    <input type="password" class="form-control" id="pwd_permission_update" onclick="clear_permission_error()">
+                </div>
+                <p style="color:red; font-size:14px" id="txt_error_update">The name or password is incorrect.</p>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" onclick="check_permission_update_code()">Confirm</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function clear_permission_error() {
+        $('#txt_error').hide();
+        $('#txt_error_change').hide();
+        $('#txt_error_change_new').hide();
+        $('#txt_error_online').hide();
+        $('#txt_error_update').hide();
+    }
+</script>

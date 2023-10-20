@@ -56,6 +56,25 @@
 <input type="hidden" id="machine_code" value="<?= $machine_code ?>">
 <script>
     function update_version() {
+        $('#txt_error_update').hide();
+        $('#modal_check_updatecode').modal('toggle');
+    }
+
+    function check_permission_update_code() {
+        $.post("<?= base_url('admin/Administrator/check_permission') ?>", {
+            user_permission: $('#user_permission_update').val(),
+            pwd_permission: $('#pwd_permission_update').val()
+        }, function(data) {
+            if (data == "true") {
+                $('#modal_check_updatecode').modal('hide');
+                commit_update();
+            } else {
+                $('#txt_error_update').show();
+            }
+        })
+    }
+
+    function commit_update() {
         $('#modal_update_systems').modal('toggle');
         $.get("http://localhost:5006/update", {}, function() {})
     }
