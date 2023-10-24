@@ -21,6 +21,7 @@
         $setting_mode = $this->Setting_model->setting_mode();
         $online_setting = $this->Setting_model->get_online_setting();
         $machine_code = $this->Setting_model->get_machine_code();
+        $options = $this->Setting_model->get_machine_option();
         $result = array(
             'path_file' => 'substance/index',
             'menu_name' => 'Réglages (PH / ORP / APF)',
@@ -32,7 +33,8 @@
             'setting_mode' => $setting_mode,
             'online_setting' => $online_setting,
             'machine_code' => $machine_code,
-            'path_server' => $this->path_server
+            'path_server' => $this->path_server,
+            'options' => $options
         );
         $this->load->view('admin/index', $result);
     }
@@ -62,6 +64,7 @@
         $setting_mode = $this->Setting_model->setting_mode();
         $online_setting = $this->Setting_model->get_online_setting();
         $machine_code = $this->Setting_model->get_machine_code();
+        $options = $this->Setting_model->get_machine_option();
         $result = array(
             'path_file' => 'substance/setting',
             'menu_name' => 'PH / ORP / APF / CHLORINE',
@@ -70,7 +73,8 @@
             'setting_mode' => $setting_mode,
             'online_setting' => $online_setting,
             'machine_code' => $machine_code,
-            'path_server' => $this->path_server
+            'path_server' => $this->path_server,
+            'options' => $options
         );
         $this->load->view('admin/index', $result);
     }

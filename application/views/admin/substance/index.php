@@ -63,10 +63,18 @@
                         <thead>
                             <tr>
                                 <th style="color:white">Heure</th>
-                                <th style="color:white">PH</th>
-                                <th style="color:white">ORP</th>
-                                <th style="color:white">APF</th>
-                                <th style="color:white">Chlorine</th>
+                                <?php if ($options[0]->ph == 1) { ?>
+                                    <th style="color:white">PH</th>
+                                <?php } ?>
+                                <?php if ($options[0]->orp == 1) { ?>
+                                    <th style="color:white">ORP</th>
+                                <?php } ?>
+                                <?php if ($options[0]->apf == 1) { ?>
+                                    <th style="color:white">APF</th>
+                                <?php } ?>
+                                <?php if ($options[0]->chlorine == 1) { ?>
+                                    <th style="color:white">Chlorine</th>
+                                <?php } ?>
                             </tr>
                         </thead>
                         <?php
@@ -99,42 +107,50 @@
                                         $time_set = $i . ":00 - " . $i . ":59";
                                         echo $time_set;
                                     } ?></td>
-                                <td>
-                                    <div class="form-check form-switch">
-                                        <?php if ($info[0]->$filtration_status == 0) { ?>
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" disabled>
-                                        <?php } else { ?>
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" <?= $ph[0]->$ph_status == 1 ? 'checked' : '' ?> onclick="set_ph('<?= $i ?>','<?= $info[0]->$filtration_status ?>');">
-                                        <?php } ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="form-check form-switch">
-                                        <?php if ($info[0]->$filtration_status == 0) { ?>
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" disabled>
-                                        <?php } else { ?>
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" <?= $orp[0]->$orp_status == 1 ? 'checked' : '' ?> onclick="set_orp('<?= $i ?>','<?= $info[0]->$filtration_status ?>');">
-                                        <?php } ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="form-check form-switch">
-                                        <?php if ($info[0]->$filtration_status == 0) { ?>
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" disabled>
-                                        <?php } else { ?>
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" <?= $apf[0]->$apf_status == 1 ? 'checked' : '' ?> onclick="set_apf('<?= $i ?>','<?= $info[0]->$filtration_status ?>');">
-                                        <?php } ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="form-check form-switch">
-                                        <?php if ($info[0]->$filtration_status == 0) { ?>
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" disabled>
-                                        <?php } else { ?>
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" <?= $chlorine[0]->$chlorine_status == 1 ? 'checked' : '' ?> onclick="set_chlorine('<?= $i ?>','<?= $info[0]->$filtration_status ?>');">
-                                        <?php } ?>
-                                    </div>
-                                </td>
+                                <?php if ($options[0]->ph == 1) { ?>
+                                    <td>
+                                        <div class="form-check form-switch">
+                                            <?php if ($info[0]->$filtration_status == 0) { ?>
+                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" disabled>
+                                            <?php } else { ?>
+                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" <?= $ph[0]->$ph_status == 1 ? 'checked' : '' ?> onclick="set_ph('<?= $i ?>','<?= $info[0]->$filtration_status ?>');">
+                                            <?php } ?>
+                                        </div>
+                                    </td>
+                                <?php } ?>
+                                <?php if ($options[0]->orp == 1) { ?>
+                                    <td>
+                                        <div class="form-check form-switch">
+                                            <?php if ($info[0]->$filtration_status == 0) { ?>
+                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" disabled>
+                                            <?php } else { ?>
+                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" <?= $orp[0]->$orp_status == 1 ? 'checked' : '' ?> onclick="set_orp('<?= $i ?>','<?= $info[0]->$filtration_status ?>');">
+                                            <?php } ?>
+                                        </div>
+                                    </td>
+                                <?php } ?>
+                                <?php if ($options[0]->apf == 1) { ?>
+                                    <td>
+                                        <div class="form-check form-switch">
+                                            <?php if ($info[0]->$filtration_status == 0) { ?>
+                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" disabled>
+                                            <?php } else { ?>
+                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" <?= $apf[0]->$apf_status == 1 ? 'checked' : '' ?> onclick="set_apf('<?= $i ?>','<?= $info[0]->$filtration_status ?>');">
+                                            <?php } ?>
+                                        </div>
+                                    </td>
+                                <?php } ?>
+                                <?php if ($options[0]->chlorine == 1) { ?>
+                                    <td>
+                                        <div class="form-check form-switch">
+                                            <?php if ($info[0]->$filtration_status == 0) { ?>
+                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" disabled>
+                                            <?php } else { ?>
+                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" <?= $chlorine[0]->$chlorine_status == 1 ? 'checked' : '' ?> onclick="set_chlorine('<?= $i ?>','<?= $info[0]->$filtration_status ?>');">
+                                            <?php } ?>
+                                        </div>
+                                    </td>
+                                <?php } ?>
                                 </tr>
                             <?php } ?>
                     </table>
