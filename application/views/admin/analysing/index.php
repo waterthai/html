@@ -45,8 +45,8 @@
                     <div class="col-md-5">
                         <div class="box-showing height220">
                             <h4>Pression (Bar)<span class="float-end" id="read_pressure">0.00</span></h4>
-                            <h4>Pression mini (Bar) <span class="float-end" id="min-pressure">0.00</span></h4>
-                            <h4>Pression maxi (Bar) <span class="float-end" id="max-pressure">0.00</span></h4>
+                            <h4>Pression mini (Bar) <span class="float-end" id="min-pressure"><?= number_format($settings[0]->setting_basse, 1) ?></span></h4>
+                            <h4>Pression maxi (Bar) <span class="float-end" id="max-pressure"><?= number_format($settings[0]->setting_haute, 1) ?></span></h4>
                             <h4>Panse de sécurité (3 Hr) <span class="float-end" id="pressure_count_down">Fault</span></h4>
                             <h4 style="display: none;">W28-Counter (3hr) <span class="float-end" id="countdown_pressure_set">Fault</span></h4>
                         </div>
@@ -82,7 +82,7 @@
     setInterval(read_temp, 3000);
     setInterval(read_pressure, 3000);
     setInterval(read_pressure_count_down, 3000);
-    setInterval(min_max_pressure, 3000);
+    // setInterval(min_max_pressure, 3000);
     $(function() {
         load_plc_in();
         load_plc_out();
@@ -93,7 +93,7 @@
         read_temp();
         read_pressure();
         read_pressure_count_down();
-        min_max_pressure();
+        // min_max_pressure();
     });
     var load_plc_in = function() {
         var data_in = '';
@@ -212,22 +212,22 @@
             }
         });
     }
-    var min_max_pressure = function() {
-        $.getJSON("<?= base_url('api/Rest_api/get_dashborad') ?>", function(data) {
-            $.each(data, function(k, v) {
-                if (v['min_pressure'] == '') {
-                    $('#min-pressure').html('0')
-                } else {
-                    $('#min-pressure').html(v['min_pressure'])
-                }
+    // var min_max_pressure = function() {
+    //     $.getJSON("<?= base_url('api/Rest_api/get_dashborad') ?>", function(data) {
+    //         $.each(data, function(k, v) {
+    //             if (v['min_pressure'] == '') {
+    //                 $('#min-pressure').html('0')
+    //             } else {
+    //                 $('#min-pressure').html(v['min_pressure'])
+    //             }
 
-                if (v['max_pressure'] == '') {
-                    $('#max-pressure').html('0')
-                } else {
+    //             if (v['max_pressure'] == '') {
+    //                 $('#max-pressure').html('0')
+    //             } else {
 
-                    $('#max-pressure').html(v['max_pressure'])
-                }
-            })
-        });
-    }
+    //                 $('#max-pressure').html(v['max_pressure'])
+    //             }
+    //         })
+    //     });
+    // }
 </script>

@@ -212,32 +212,32 @@
             'count_down' => $pressure_countdown
         ));
 
-        $data_dashboard = $this->db->select('*')->from('dashboard')->get()->result();
-        //max pressure
-        if ($data_dashboard[0]->max_pressure  == '') {
-            $this->db->where('dashboard_id', 1)->update('dashboard', array(
-                'max_pressure' => $pressure
-            ));
-        } else {
-            if ($data_dashboard[0]->max_pressure < intval($pressure)) {
-                $this->db->where('dashboard_id', 1)->update('dashboard', array(
-                    'max_pressure' => $pressure
-                ));
-            }
-        }
-        //min pressure
-        if ($data_dashboard[0]->min_pressure  == 0) {
-            if ($data_dashboard[0]->min_pressure > intval($pressure)) {
-                $this->db->where('dashboard_id', 1)->update('dashboard', array(
-                    'min_pressure' => $pressure
-                ));
-            }
-        } else {
-            if ($data_dashboard[0]->min_pressure > intval($pressure)) {
-                $this->db->where('dashboard_id', 1)->update('dashboard', array(
-                    'min_pressure' => $pressure
-                ));
-            }
-        }
+        // $data_dashboard = $this->db->select('*')->from('dashboard')->get()->result();
+        // //max pressure
+        // if ($data_dashboard[0]->max_pressure  == '') {
+        //     $this->db->where('dashboard_id', 1)->update('dashboard', array(
+        //         'max_pressure' => $pressure
+        //     ));
+        // } else {
+        //     if ($data_dashboard[0]->max_pressure < intval($pressure)) {
+        //         $this->db->where('dashboard_id', 1)->update('dashboard', array(
+        //             'max_pressure' => $pressure
+        //         ));
+        //     }
+        // }
+        // //min pressure
+        // if ($data_dashboard[0]->min_pressure  == 0) {
+        //     if ($data_dashboard[0]->min_pressure > intval($pressure)) {
+        //         $this->db->where('dashboard_id', 1)->update('dashboard', array(
+        //             'min_pressure' => $pressure
+        //         ));
+        //     }
+        // } else {
+        //     if ($data_dashboard[0]->min_pressure > intval($pressure)) {
+        //         $this->db->where('dashboard_id', 1)->update('dashboard', array(
+        //             'min_pressure' => $pressure
+        //         ));
+        //     }
+        // }
     }
 }

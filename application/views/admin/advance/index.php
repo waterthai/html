@@ -35,7 +35,7 @@
                     </div>
                 </div>
 
-                <div class="row mt-3">
+                <div class="row mt-3" style="display: none;">
                     <div class="col-md-8 mt-3">
                         <h3>Délai de démarrage du systême [ 1-5 ]</h3>
                     </div>
