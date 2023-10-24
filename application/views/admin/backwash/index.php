@@ -306,7 +306,7 @@
                                 <label>Démarrage : </label>
                                 <input type="time" class="form-control" name="start_time_1" id="start_time_1" value="<?= $info[0]->backwash_start_1 ?>">
                             </div>
-                            <div class="col-md-6" >
+                            <div class="col-md-6">
                                 <label>Arrêt : </label>
                                 <input type="time" class="form-control" name="end_time_1" id="end_time_1" value="<?= $info[0]->backwash_end_1 ?>">
                             </div>
@@ -446,7 +446,7 @@
                                 <label>Démarrage : </label>
                                 <input type="time" class="form-control" name="start_time_4" id="start_time_4" value="<?= $info[0]->backwash_start_4 ?>">
                             </div>
-                            <div class="col-md-6" >
+                            <div class="col-md-6">
                                 <label>Arrêt : </label>
                                 <input type="time" class="form-control" name="end_time_4" id="end_time_4" value="<?= $info[0]->backwash_end_4 ?>">
                             </div>
@@ -552,36 +552,61 @@
                 return false;
             }
         } else {
-            var arr_day = [];
-            var day = $('#txt_day_state_1').val();
-            var split_day = day.split(",");
-            for (var i = 0; i < split_day.length; i++) {
-                if (split_day[i] != '') {
-                    var set_text_split = split_day[i];
-                    split_of_day = set_text_split.split('_');
-                    arr_day.push(parseInt(split_of_day[2]));
-                }
-            }
-            $.post("<?= base_url('admin/backwash/save_backwash_one') ?>", {
-                day_state: arr_day.sort(),
-                start_time: $('#start_time_1').val(),
-                end_time: $('#end_time_1').val()
-            }, function(data) {
-                if ($('#online_setting').val() == 1) {
-                    save_backwash_one_server(arr_day.sort());
+            // เช็คเงื่อนไข
+            if ($('#start_time_1').val() > $('#end_time_1').val()) {
+                alert_system_incorrect();
+            } else {
+                //เช็คเงือนไขนาที
+                var start_time_1 = $('#start_time_1').val();
+                var end_time_1 = $('#end_time_1').val();
+                var split_time_start = start_time_1.split(":");
+                var split_time_end = end_time_1.split(":");
+                if (parseInt(split_time_start[1]) == parseInt(split_time_end[1])) {
+                    alert_system_incorrect();
                 } else {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'Your work has been saved',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
+                    // เช็คเงื่อนไขนาที ไม่เกิน 5 นาที
+                    var minus_time = parseInt(split_time_end[1]) - parseInt(split_time_start[1]);
+                    if (minus_time > 5) {
+                        alert_system_incorrect();
+                    } else {
+                        var arr_day = [];
+                        var day = $('#txt_day_state_1').val();
+                        var split_day = day.split(",");
+                        for (var i = 0; i < split_day.length; i++) {
+                            if (split_day[i] != '') {
+                                var set_text_split = split_day[i];
+                                split_of_day = set_text_split.split('_');
+                                arr_day.push(parseInt(split_of_day[2]));
+                            }
+                        }
+                        $.post("<?= base_url('admin/backwash/save_backwash_one') ?>", {
+                            day_state: arr_day.sort(),
+                            start_time: $('#start_time_1').val(),
+                            end_time: $('#end_time_1').val()
+                        }, function(data) {
+                            if ($('#online_setting').val() == 1) {
+                                save_backwash_one_server(arr_day.sort());
+                            } else {
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Your work has been saved',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
+                        });
+                    }
+
                 }
-            });
+
+            }
+
         }
 
     }
+
+
 
     function save_backwash_one_server(arr_day) {
         var path_server = $('#path_server').val() + 'api/Receive_setting/save_backwash_one';
@@ -612,34 +637,54 @@
                 return false;
             }
         } else {
-            var arr_day = [];
-            var day = $('#txt_day_state_2').val();
-            var split_day = day.split(",");
-            for (var i = 0; i < split_day.length; i++) {
-                if (split_day[i] != '') {
-                    var set_text_split = split_day[i];
-                    split_of_day = set_text_split.split('_');
-                    arr_day.push(split_of_day[2]);
-                }
-            }
-            $.post("<?= base_url('admin/backwash/save_backwash_two') ?>", {
-                day_state: arr_day.sort(),
-                start_time: $('#start_time_2').val(),
-                end_time: $('#end_time_2').val()
-            }, function() {
-                if ($('#online_setting').val() == 1) {
-                    save_backwash_two_server(arr_day.sort());
+            if ($('#start_time_2').val() > $('#end_time_2').val()) {
+                alert_system_incorrect();
+            } else {
+                var start_time_2 = $('#start_time_2').val();
+                var end_time_2 = $('#end_time_2').val();
+                var split_time_start = start_time_2.split(":");
+                var split_time_end = end_time_2.split(":");
+                if (split_time_start[1] == split_time_end[1]) {
+                    alert_system_incorrect();
                 } else {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'Your work has been saved',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
+                    var minus_time = parseInt(split_time_end[1]) - parseInt(split_time_start[1]);
+                    if (minus_time > 5) {
+                        alert_system_incorrect();
+                    } else {
+                        var arr_day = [];
+                        var day = $('#txt_day_state_2').val();
+                        var split_day = day.split(",");
+                        for (var i = 0; i < split_day.length; i++) {
+                            if (split_day[i] != '') {
+                                var set_text_split = split_day[i];
+                                split_of_day = set_text_split.split('_');
+                                arr_day.push(split_of_day[2]);
+                            }
+                        }
+                        $.post("<?= base_url('admin/backwash/save_backwash_two') ?>", {
+                            day_state: arr_day.sort(),
+                            start_time: $('#start_time_2').val(),
+                            end_time: $('#end_time_2').val()
+                        }, function() {
+                            if ($('#online_setting').val() == 1) {
+                                save_backwash_two_server(arr_day.sort());
+                            } else {
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Your work has been saved',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
+
+                        });
+                    }
+
                 }
 
-            });
+            }
+
         }
     }
 
@@ -673,33 +718,50 @@
             }
 
         } else {
-            var arr_day = [];
-            var day = $('#txt_day_state_3').val();
-            var split_day = day.split(",");
-            for (var i = 0; i < split_day.length; i++) {
-                if (split_day[i] != '') {
-                    var set_text_split = split_day[i];
-                    split_of_day = set_text_split.split('_');
-                    arr_day.push(split_of_day[2]);
+            if ($('#start_time_3').val() > $('#end_time_3').val()) {
+                alert_system_incorrect();
+            } else {
+                var start_time_3 = $('#start_time_3').val();
+                var end_time_3 = $('#end_time_3').val();
+                var split_time_start = start_time_3.split(':');
+                var split_time_end = end_time_3.split(':');
+                if (parseInt(split_time_start[1]) == parseInt(split_time_end[1])) {
+                    alert_system_incorrect();
+                } else {
+                    var minus_time = parseInt(split_time_end[1]) - parseInt(split_time_start[1]);
+                    if (minus_time > 5) {
+                        alert_system_incorrect();
+                    } else {
+                        var arr_day = [];
+                        var day = $('#txt_day_state_3').val();
+                        var split_day = day.split(",");
+                        for (var i = 0; i < split_day.length; i++) {
+                            if (split_day[i] != '') {
+                                var set_text_split = split_day[i];
+                                split_of_day = set_text_split.split('_');
+                                arr_day.push(split_of_day[2]);
+                            }
+                        }
+                        $.post("<?= base_url('admin/backwash/save_backwash_three') ?>", {
+                            day_state: arr_day.sort(),
+                            start_time: $('#start_time_3').val(),
+                            end_time: $('#end_time_3').val()
+                        }, function() {
+                            if ($('#online_setting').val() == 1) {
+                                save_backwash_three_server(arr_day.sort());
+                            } else {
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Your work has been saved',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
+                        });
+                    }
                 }
             }
-            $.post("<?= base_url('admin/backwash/save_backwash_three') ?>", {
-                day_state: arr_day.sort(),
-                start_time: $('#start_time_3').val(),
-                end_time: $('#end_time_3').val()
-            }, function() {
-                if ($('#online_setting').val() == 1) {
-                    save_backwash_three_server(arr_day.sort());
-                } else {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'Your work has been saved',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                }
-            });
         }
     }
 
@@ -733,34 +795,50 @@
             }
 
         } else {
-            var arr_day = [];
-            var day = $('#txt_day_state_4').val();
-            var split_day = day.split(",");
-            for (var i = 0; i < split_day.length; i++) {
-                if (split_day[i] != '') {
-                    var set_text_split = split_day[i];
-                    split_of_day = set_text_split.split('_');
-                    arr_day.push(split_of_day[2]);
+            if ($('#start_time_4').val() > $('#end_time_4').val()) {
+                alert_system_incorrect();
+            } else {
+                var start_time_4 = $('#start_time_4').val();
+                var end_time_4 = $('#end_time_4').val();
+                var split_time_start = start_time_4.split(':');
+                var split_time_end = end_time_4.split(':');
+                if (parseInt(split_time_start[1]) == parseInt(split_time_end[1])) {
+                    alert_system_incorrect();
+                } else {
+                    var minus_time = parseInt(split_time_end[1]) - parseInt(split_time_start[1]);
+                    if (minus_time > 5) {
+                        alert_system_incorrect();
+                    } else {
+                        var arr_day = [];
+                        var day = $('#txt_day_state_4').val();
+                        var split_day = day.split(",");
+                        for (var i = 0; i < split_day.length; i++) {
+                            if (split_day[i] != '') {
+                                var set_text_split = split_day[i];
+                                split_of_day = set_text_split.split('_');
+                                arr_day.push(split_of_day[2]);
+                            }
+                        }
+                        $.post("<?= base_url('admin/backwash/save_backwash_four') ?>", {
+                            day_state: arr_day.sort(),
+                            start_time: $('#start_time_4').val(),
+                            end_time: $('#end_time_4').val()
+                        }, function() {
+                            if ($('#online_setting').val() == 1) {
+                                save_backwash_four_server(arr_day.sort());
+                            } else {
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Your work has been saved',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
+                        });
+                    }
                 }
             }
-            $.post("<?= base_url('admin/backwash/save_backwash_four') ?>", {
-                day_state: arr_day.sort(),
-                start_time: $('#start_time_4').val(),
-                end_time: $('#end_time_4').val()
-            }, function() {
-                if ($('#online_setting').val() == 1) {
-                    save_backwash_four_server(arr_day.sort());
-                } else {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'Your work has been saved',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                }
-
-            });
         }
     }
 
@@ -857,6 +935,16 @@
             machine_code: $('#machine_code').val()
         }, function() {
             location.reload();
+        })
+    }
+
+    function alert_system_incorrect() {
+        Swal.fire({
+            title: 'System alert',
+            text: "You set the time incorrectly.",
+            icon: 'warning',
+        }).then((result) => {
+
         })
     }
 </script>
