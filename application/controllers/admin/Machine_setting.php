@@ -37,6 +37,13 @@
             'machine_code' => $machine_code
         );
         $this->Machine_model->update_machine($data);
+
+        $path =  "/home/pi/machine_code/machine_code.txt";
+        if (!write_file($path, $machine_code)) {
+            echo 'Unable to write the file';
+        } else {
+            echo 'File written!';
+        }
     }
     public function update_selection()
     {
@@ -62,6 +69,8 @@
         $isaver_mode_2 = $this->input->post('isaver_mode_2');
         $isaver_mode_3 = $this->input->post('isaver_mode_3');
         $isaver_mode_4 = $this->input->post('isaver_mode_4');
+        $temp = $this->input->post('temp');
+
 
         $data = array(
             'volt_1_ph' => isset($volt_1) ? 1 : 0,
@@ -86,6 +95,7 @@
             'isaver_mode_2' => isset($isaver_mode_2) ? 1 : 0,
             'isaver_mode_3' => isset($isaver_mode_3) ? 1 : 0,
             'isaver_mode_4' => isset($isaver_mode_4) ? 1 : 0,
+            'temperature' => isset($temp) ? 1 : 0,
         );
 
         $this->Machine_model->update_selection($data);

@@ -43,6 +43,11 @@
                     <input class="form-check-input" type="checkbox" role="switch" id="orp" name="orp" <?= ($selection[0]->orp == 1) ? 'checked' : '' ?>>
                     <label class="form-check-label" for="orp">ORP</label>
                 </div>
+                <h4><i class="fa fa-caret-right fa-lg"></i> Température</h4>
+                <div class="form-check form-switch mt-2">
+                    <input class="form-check-input" type="checkbox" role="switch" id="temp" name="temp" <?= ($selection[0]->temperature == 1) ? 'checked' : '' ?>>
+                    <label class="form-check-label" for="orp">Température</label>
+                </div>
             </div>
             <div class="col-md-4">
                 <h4><i class="fa fa-caret-right fa-lg"></i> APF</h4>
@@ -71,7 +76,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div >
+                <div>
                     <h4><i class="fa fa-caret-right fa-lg"></i> Heat Pump</h4>
                     <div class="form-check form-switch mt-2">
                         <input class="form-check-input" type="checkbox" role="switch" id="heat" name="heat" <?= ($selection[0]->heat_pump_heater == 1) ? 'checked' : '' ?>>

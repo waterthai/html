@@ -19,7 +19,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="box-showing">
-                            <h4>Date/Heure <span class="float-end"><?= date('Y-m-d H:i:s') ?></span></h4>
+                            <h4>Date/Heure <span class="float-end" id="datetime_now"><?= date('Y-m-d H:i:s') ?></span></h4>
                         </div>
                     </div>
                 </div>
@@ -82,6 +82,7 @@
     setInterval(read_temp, 3000);
     setInterval(read_pressure, 3000);
     setInterval(read_pressure_count_down, 3000);
+    setInterval(load_datetime_now, 1000);
     // setInterval(min_max_pressure, 3000);
     $(function() {
         load_plc_in();
@@ -93,9 +94,22 @@
         read_temp();
         read_pressure();
         read_pressure_count_down();
+        load_datetime_now();
         // min_max_pressure();
     });
-    var load_plc_in = function() {
+
+    function load_datetime_now() {
+        var currentdate = new Date();
+        var datetime = currentdate.getDate() + "/" +
+            (currentdate.getMonth() + 1) + "/" +
+            currentdate.getFullYear() + ' ' +
+            currentdate.getHours() + ":" +
+            currentdate.getMinutes() + ":" +
+            currentdate.getSeconds();
+        $('#datetime_now').html(datetime);
+    }
+
+    function load_plc_in() {
         var data_in = '';
         $.getJSON("<?= base_url('Read_status/read_plc_in') ?>", function(data) {
             $.each(data, function(k, v) {
@@ -108,7 +122,8 @@
             $('#plc_in').html(data_in);
         });
     }
-    var load_plc_out = function() {
+
+    function load_plc_out() {
         var data_in = '';
         $.getJSON("<?= base_url('Read_status/read_plc') ?>", function(data) {
             $.each(data, function(k, v) {
@@ -121,7 +136,8 @@
             $('#plc_out').html(data_in);
         });
     }
-    var load_relay = function() {
+
+    function load_relay() {
         var data_in = '';
         $.getJSON("<?= base_url('Read_status/relay_8_ch') ?>", function(data) {
             $.each(data, function(k, v) {
@@ -134,7 +150,8 @@
             $('#relay_ch').html(data_in);
         });
     }
-    var setting_mode = function() {
+
+    function setting_mode() {
         $.getJSON("<?= base_url('api/Rest_api/get_setting_mode') ?>", function(data) {
             $.each(data, function(k, v) {
                 if (v['sm_filtration'] == '1') {
@@ -159,7 +176,8 @@
             });
         });
     }
-    var backwash = function() {
+
+    function backwash() {
         $.getJSON("<?= base_url('api/Rest_api/get_besgo_setting') ?>", function(data) {
             $.each(data, function(k, v) {
                 if (v['backwash_mode'] == '0') {
@@ -172,24 +190,28 @@
             });
         });
     }
-    var temp_set = function() {
+
+    function temp_set() {
         $.getJSON("<?= base_url('api/Rest_api/get_data_setting') ?>", function(data) {
             $.each(data, function(k, v) {
                 $('#set_temp').html(v['setting_temperature']);
             });
         });
     }
-    var read_temp = function() {
+
+    function read_temp() {
         $.getJSON("<?= base_url('Read_status/read_temperature') ?>", function(data) {
             $('#read_temp').html(data);
         });
     }
-    var read_pressure = function() {
+
+    function read_pressure() {
         $.getJSON("<?= base_url('Read_status/read_pressure') ?>", function(data) {
             $('#read_pressure').html(data);
         });
     }
-    var read_pressure_count_down = function() {
+
+    function read_pressure_count_down() {
         $.getJSON("<?= base_url('Read_status/read_pressure_countdown') ?>", function(data) {
             if (data == '') {
                 $('#pressure_count_down').html('Fault');

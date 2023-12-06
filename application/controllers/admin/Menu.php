@@ -7,12 +7,15 @@
         //     redirect('member/dashboard/index', 'refersh');
         //     exit();
         // }
+        $this->load->model('admin/Menu_model', 'Menu_model');
     }
     public function index()
     {
+        $options = $this->Menu_model->get_options();
         $result = array(
             'path_file' => 'menu/index',
             'menu_name' => 'MENU',
+            'options' => $options
         );
         $this->load->view('admin/index', $result);
     }

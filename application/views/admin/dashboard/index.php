@@ -32,7 +32,11 @@
                 </div>
                 <h3>Date et heure : <span class="float-end font-date" id="datetime_now"></span></h3>
                 <h3>Pression : <span class="float-end" id="read_pressure">0.00</span></h3>
-                <h3>Température : <span class="float-end" id="read_temp">0.00</span></h3>
+                <?php if ($options[0]->temperature == 1) { ?>
+                    <h3>Température : <span class="float-end" id="read_temp">0.00</span></h3>
+                <?php } else { ?>
+                    <h3 class="text-blur">Température : <span class="float-end">0.00</span></h3>
+                <?php } ?>
                 <h3>PH : <span class="float-end" id="read_ph">0.00</span></h3>
                 <h3>ORP : <span class="float-end" id="read_orp">0.00</span></h3>
                 <h3 style="display: none;">Count Down :<span class="float-end" id="countdown_pressure_set">0.00</span> </h3>
@@ -249,9 +253,13 @@
     }
 
     function load_temperature() {
-        $.getJSON("<?= base_url('Read_status/read_temperature') ?>", function(data) {
-            $('#read_temp').html(data);
-        });
+        var status_temp = "<?= $options[0]->temperature ?>";
+        if (status_temp == "1") {
+            $.getJSON("<?= base_url('Read_status/read_temperature') ?>", function(data) {
+                $('#read_temp').html(data);
+            });
+        }
+
     }
 
     function status_show() {

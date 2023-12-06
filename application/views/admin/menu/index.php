@@ -21,18 +21,18 @@
                 <div class="text-center mt-2">
                     <h5>Accueil</h5>
                 </div>
-
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="box-menu" onclick="goto_page('Temperature/index');">
-                <img src="<?= base_url('assets/images/temperatures.png') ?>" class="menu_image">
-                <div class="text-center mt-2">
-                    <h5>Température</h5>
+        <?php if ($options[0]->temperature == 1) { ?>
+            <div class="col-md-4">
+                <div class="box-menu" onclick="goto_page('Temperature/index');">
+                    <img src="<?= base_url('assets/images/temperatures.png') ?>" class="menu_image">
+                    <div class="text-center mt-2">
+                        <h5>Température</h5>
+                    </div>
                 </div>
-
             </div>
-        </div>
+        <?php } ?>
         <div class="col-md-4">
             <div class="box-menu" onclick="goto_page('filtration/index');">
                 <img src="<?= base_url('assets/images/filtration.png') ?>" class="menu_image">
@@ -41,16 +41,16 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="box-menu" onclick="goto_page('backwash/index');">
-
-                <img src="<?= base_url('assets/images/antibacterial.png') ?>" class="menu_image">
-                <div class="text-center mt-2">
-                    <h5>Réglages Backwash</h5>
+        <?php if ($options[0]->backwash == 1) { ?>
+            <div class="col-md-4">
+                <div class="box-menu" onclick="goto_page('backwash/index');">
+                    <img src="<?= base_url('assets/images/antibacterial.png') ?>" class="menu_image">
+                    <div class="text-center mt-2">
+                        <h5>Réglages Backwash</h5>
+                    </div>
                 </div>
             </div>
-        </div>
-
+        <?php } ?>
         <div class="col-md-4">
             <div class="box-menu" onclick="goto_page('Substance/index');">
                 <img src="<?= base_url('assets/images/paper.png') ?>" class="menu_image">
