@@ -11,7 +11,7 @@
 </style>
 <div class="container mb-4">
     <div class="text-center">
-        <h1>MENUS</h1>
+        <h1>MENU</h1>
     </div>
 
     <div class="row g-3">
